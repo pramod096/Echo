@@ -28,6 +28,8 @@ import com.example.echo.databases.EchoDatabase
 import com.example.echo.fragments.SongPlayingFragment.Staticated.mAcceleration
 import com.example.echo.fragments.SongPlayingFragment.Staticated.mAccelerationCurrent
 import com.example.echo.fragments.SongPlayingFragment.Staticated.mAccelerationLast
+import com.example.echo.fragments.SongPlayingFragment.Statified.mediaplayer
+import com.example.echo.fragments.SongPlayingFragment.Statified.seekbar
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
@@ -63,16 +65,14 @@ class SongPlayingFragment : Fragment() {
         var updateSongTime = object : Runnable {
             override fun run() {
                 val getCurrent = mediaplayer?.getCurrentPosition()
-                startTimeText?.setText(
+                startTimeText!!.text =
                     String.format(
                         "%d:%d",
 
-                        TimeUnit.MILLISECONDS.toMinutes(getCurrent?.toLong() as Long),
-                        TimeUnit.MILLISECONDS.toSeconds(getCurrent?.toLong()) -
-                                TimeUnit.MILLISECONDS.toSeconds(TimeUnit.MILLISECONDS.toMinutes(getCurrent?.toLong()))
-                    )
-                )
-                seekbar?.setProgress(getCurrent?.toInt() as Int)
+                        TimeUnit.MILLISECONDS.toMinutes(getCurrent?.toLong()!!),
+                        TimeUnit.MILLISECONDS.toSeconds(getCurrent?.toLong()!!) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(getCurrent?.toLong())))
+                seekbar?.setProgress(getCurrent.toInt())
                 Handler().postDelayed(this, 1000)
             }
         }
@@ -119,7 +119,7 @@ class SongPlayingFragment : Fragment() {
                     Statified.currentSongHelper?.isPlaying = true
                 }
             }
-            if (Statified.favouriteContent?.checkifIdExist(Statified.currentSongHelper?.songId?.toInt() as Int) as Boolean) {
+            if (Statified.favouriteContent?.checkifIdExists(Statified.currentSongHelper?.songId?.toInt() as Int) as Boolean) {
                 Statified.fab?.setImageDrawable(
                     ContextCompat.getDrawable(
                         Statified.myActivity as Context,
@@ -153,7 +153,8 @@ class SongPlayingFragment : Fragment() {
         fun processInformation(mediaPlayer: MediaPlayer) {
             val finalTime = mediaPlayer.duration
             val startTime = mediaPlayer.currentPosition
-            Statified.seekbar?.max = finalTime
+            Statified.seekbar?.setMax(finalTime)
+            Statified.seekbar?.setProgress(startTime)
             Statified.startTimeText?.setText(
                 String.format(
                     "%d:%d",
@@ -215,7 +216,7 @@ class SongPlayingFragment : Fragment() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            if (Statified.favouriteContent?.checkifIdExist(Statified.currentSongHelper?.songId?.toInt() as Int) as Boolean) {
+            if (Statified.favouriteContent?.checkifIdExists(Statified.currentSongHelper?.songId?.toInt() as Int) as Boolean) {
                 Statified.fab?.setImageDrawable(
                     ContextCompat.getDrawable(
                         Statified.myActivity as Context,
@@ -418,7 +419,7 @@ class SongPlayingFragment : Fragment() {
             Statified.loopImageButton?.setBackgroundResource(R.drawable.loop_white_icon)
             Statified.currentSongHelper?.isLoop = false
         }
-        if (Statified.favouriteContent?.checkifIdExist(Statified.currentSongHelper?.songId?.toInt() as Int) as Boolean) {
+        if (Statified.favouriteContent?.checkifIdExists(Statified.currentSongHelper?.songId?.toInt() as Int) as Boolean) {
             Statified.fab?.setBackgroundResource(R.drawable.favorite_on)
         } else {
             Statified.fab?.setBackgroundResource(R.drawable.favorite_off)
@@ -428,7 +429,7 @@ class SongPlayingFragment : Fragment() {
 
     fun clickHandler() {
         Statified.fab?.setOnClickListener({
-            if (Statified.favouriteContent?.checkifIdExist(Statified.currentSongHelper?.songId?.toInt() as Int) as Boolean) {
+            if (Statified.favouriteContent?.checkifIdExists(Statified.currentSongHelper?.songId?.toInt() as Int) as Boolean) {
                 Statified.fab?.setBackgroundResource(R.drawable.favorite_off)
                 Statified.favouriteContent?.deleteFavourite(Statified.currentSongHelper?.songId?.toInt() as Int)
 
@@ -437,7 +438,7 @@ class SongPlayingFragment : Fragment() {
                 Statified.fab?.setBackgroundResource(R.drawable.favorite_on)
 
 
-                Statified.favouriteContent?.storeAsFavourite(
+                Statified.favouriteContent?.storeasFavourite(
                     Statified.currentSongHelper?.songId?.toInt(),
                     Statified.currentSongHelper?.songArtist,
                     Statified.currentSongHelper?.songTitle,
@@ -519,6 +520,19 @@ class SongPlayingFragment : Fragment() {
             }
         })
 
+        Statified.seekbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                Statified.seekbar?.setProgress(Statified.seekbar?.getProgress() as Int)
+                Statified.mediaplayer?.seekTo(Statified.seekbar?.progress as Int)
+            }
+        })
+
     }
 
 
@@ -556,7 +570,7 @@ class SongPlayingFragment : Fragment() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        if (Statified.favouriteContent?.checkifIdExist(Statified.currentSongHelper?.songId?.toInt() as Int) as Boolean) {
+        if (Statified.favouriteContent?.checkifIdExists(Statified.currentSongHelper?.songId?.toInt() as Int) as Boolean) {
             Statified.fab?.setImageDrawable(
                 ContextCompat.getDrawable(
                     Statified.myActivity as Context,

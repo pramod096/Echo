@@ -213,7 +213,7 @@ class FavouriteFragment : Fragment() {
         if (favouriteContent?.checkSize() as Int > 0) {
             noFavourites?.visibility = View.INVISIBLE
             refreshList = ArrayList<Songs>()
-            getListfromDatabase = (favouriteContent as EchoDatabase).queryDBList()
+            getListfromDatabase = (favouriteContent as EchoDatabase).queryDBforList()
             var fetchListfromDevice = getSongsFromPhone()
             if (fetchListfromDevice != null) {
                 for (i in 0..fetchListfromDevice?.size - 1) {
