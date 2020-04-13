@@ -56,10 +56,10 @@ class FavouriteFragment : Fragment() {
         activity?.title = "All Songs"
         visibleLayout = view?.findViewById<RelativeLayout>(R.id.visibleLayout)
         noFavourites = view?.findViewById<RelativeLayout>(R.id.noFav)
-        nowPlayingBottomBar = view?.findViewById<RelativeLayout>(R.id.hiddenBarMainScreen)
-        songTitle = view?.findViewById<TextView>(R.id.songTitleMainScreen)
+        nowPlayingBottomBar = view?.findViewById<RelativeLayout>(R.id.hiddenBarFavScreen)
+        songTitle = view?.findViewById<TextView>(R.id.songTitleFavScreen)
         playPauseButton = view?.findViewById<ImageButton>(R.id.playPauseButton)
-        recyclerView = view?.findViewById<RecyclerView>(R.id.contentMain)
+        recyclerView = view?.findViewById<RecyclerView>(R.id.contentFav)
 
         return view
     }

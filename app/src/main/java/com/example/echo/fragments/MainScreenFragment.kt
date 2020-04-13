@@ -167,7 +167,7 @@ class MainScreenFragment : Fragment() {
                 songTitle?.setText(SongPlayingFragment.Statified.currentSongHelper?.songTitle)
                 SongPlayingFragment.Staticated.onSongComplete()
             })
-            if (SongPlayingFragment.Statified.mediaplayer?.isPlaying as Boolean) {
+            if (SongPlayingFragment.Statified.currentSongHelper?.isPlaying as Boolean) {
                 nowPlayingBottomBar?.visibility = View.VISIBLE
             } else {
                 nowPlayingBottomBar?.visibility = View.INVISIBLE

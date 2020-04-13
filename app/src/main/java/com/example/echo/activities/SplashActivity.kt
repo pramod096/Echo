@@ -12,7 +12,7 @@ import androidx.core.app.ActivityCompat
 import com.example.echo.R
 
 class SplashActivity : AppCompatActivity() {
-    private var permissionsString = arrayOf(
+    var permissionsString = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.MODIFY_AUDIO_SETTINGS,
         Manifest.permission.READ_PHONE_STATE,
