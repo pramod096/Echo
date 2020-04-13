@@ -53,7 +53,7 @@ class FavouriteFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_favourite, container, false)
         setHasOptionsMenu(true)
-        activity?.title = "All Songs"
+        activity?.title = "Favourites"
         visibleLayout = view?.findViewById<RelativeLayout>(R.id.visibleLayout)
         noFavourites = view?.findViewById<RelativeLayout>(R.id.noFav)
         nowPlayingBottomBar = view?.findViewById<RelativeLayout>(R.id.hiddenBarFavScreen)
