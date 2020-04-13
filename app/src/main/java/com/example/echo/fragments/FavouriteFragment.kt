@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.echo.R
 import com.example.echo.Songs
+import com.example.echo.adapters.FavouriteAdapter
 import com.example.echo.adapters.MainScreenAdapter
 import com.example.echo.databases.EchoDatabase
 import java.util.*
@@ -36,7 +37,7 @@ class FavouriteFragment : Fragment() {
     var recyclerView: RecyclerView? = null
     var myActivity: Activity? = null
     var trackPosition: Int = 0
-    var _mainScreenAdapter: MainScreenAdapter? = null
+    var _favAdapter: FavouriteAdapter? = null
     var favouriteContent: EchoDatabase? = null
     var refreshList: ArrayList<Songs>? = null
     var getListfromDatabase: ArrayList<Songs>? = null
@@ -50,7 +51,7 @@ class FavouriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_main_screen, container, false)
+        val view = inflater.inflate(R.layout.fragment_favourite, container, false)
         setHasOptionsMenu(true)
         activity?.title = "All Songs"
         visibleLayout = view?.findViewById<RelativeLayout>(R.id.visibleLayout)
@@ -81,10 +82,10 @@ class FavouriteFragment : Fragment() {
         if (getSongsList != null) {
             if (action_sort_ascending!!.equals("true", true)) {
                 Collections.sort(getSongsList, Songs.Statified.nameComparator)
-                _mainScreenAdapter?.notifyDataSetChanged()
+                _favAdapter?.notifyDataSetChanged()
             } else if (action_sort_recent!!.equals("true", true)) {
                 Collections.sort(getSongsList, Songs.Statified.dateComparator)
-                _mainScreenAdapter?.notifyDataSetChanged()
+                _favAdapter?.notifyDataSetChanged()
             }
         }
         bottomBarSetup()
@@ -106,7 +107,7 @@ class FavouriteFragment : Fragment() {
             if (getSongsList != null) {
                 Collections.sort(getSongsList, Songs.Statified.nameComparator)
             }
-            _mainScreenAdapter?.notifyDataSetChanged()
+            _favAdapter?.notifyDataSetChanged()
             return false
         } else if (switcher == R.id.action_sort_recent) {
             val editorTwo = myActivity?.getSharedPreferences("action_sort", Context.MODE_PRIVATE)?.edit()
@@ -116,7 +117,7 @@ class FavouriteFragment : Fragment() {
             if (getSongsList != null) {
                 Collections.sort(getSongsList, Songs.Statified.dateComparator)
             }
-            _mainScreenAdapter?.notifyDataSetChanged()
+            _favAdapter?.notifyDataSetChanged()
             return false
         }
         return super.onOptionsItemSelected(item)
@@ -230,11 +231,11 @@ class FavouriteFragment : Fragment() {
                 visibleLayout?.visibility = View.INVISIBLE
                 noFavourites?.visibility = View.VISIBLE
             } else {
-                _mainScreenAdapter = MainScreenAdapter(refreshList as ArrayList<Songs>, myActivity as Context)
+                _favAdapter = FavouriteAdapter(refreshList as ArrayList<Songs>, myActivity as Context)
                 val mLayoutManager = LinearLayoutManager(activity)
                 recyclerView?.layoutManager = mLayoutManager
                 recyclerView?.itemAnimator = DefaultItemAnimator()
-                recyclerView?.adapter = _mainScreenAdapter
+                recyclerView?.adapter = _favAdapter
                 recyclerView?.setHasFixedSize(true)
             }
         }

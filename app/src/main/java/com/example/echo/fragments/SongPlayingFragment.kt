@@ -104,10 +104,12 @@ class SongPlayingFragment : Fragment() {
 
                     Statified.mediaplayer?.reset()
                     try {
-                        Statified.mediaplayer?.setDataSource(
-                            Statified.myActivity,
-                            Uri.parse(Statified.currentSongHelper?.songPath)
-                        )
+                        Statified.myActivity?.let {
+                            Statified.mediaplayer?.setDataSource(
+                                it,
+                                Uri.parse(Statified.currentSongHelper?.songPath)
+                            )
+                        }
                         Statified.mediaplayer?.prepare()
                         Statified.mediaplayer?.start()
                         processInformation(Statified.mediaplayer as MediaPlayer)
@@ -206,10 +208,12 @@ class SongPlayingFragment : Fragment() {
 
             Statified.mediaplayer?.reset()
             try {
-                Statified.mediaplayer?.setDataSource(
-                    Statified.myActivity,
-                    Uri.parse(Statified.currentSongHelper?.songPath)
-                )
+                Statified.myActivity?.let {
+                    Statified.mediaplayer?.setDataSource(
+                        it,
+                        Uri.parse(Statified.currentSongHelper?.songPath)
+                    )
+                }
                 Statified.mediaplayer?.prepare()
                 Statified.mediaplayer?.start()
                 processInformation(Statified.mediaplayer as MediaPlayer)
