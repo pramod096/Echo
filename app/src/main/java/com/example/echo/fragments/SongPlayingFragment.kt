@@ -371,9 +371,9 @@ class SongPlayingFragment : Fragment() {
             e.printStackTrace()
         }
 
-        var fromFavBottomBar = arguments?.get("FavBottomBar") as? String
-        if (fromFavBottomBar != null) {
-            Statified.mediaplayer = FavouriteFragment.Statified.mediaPlayer
+        var fromMainBottomBar = arguments?.get("MainBottomBar") as? String
+        if (fromMainBottomBar != null) {
+            Statified.mediaplayer = MainScreenFragment.Statified.mediaPlayer
         } else {
             Statified.mediaplayer = MediaPlayer()
             Statified.mediaplayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
