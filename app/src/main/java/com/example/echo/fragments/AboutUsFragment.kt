@@ -40,6 +40,7 @@ class AboutUsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?) {

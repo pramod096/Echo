@@ -206,6 +206,7 @@ class MainScreenFragment : Fragment() {
                 trackPosition = SongPlayingFragment.Statified.mediaplayer?.getCurrentPosition() as Int
                 playPauseButton?.setBackgroundResource(R.drawable.play_icon)
             } else {
+                trackPosition = SongPlayingFragment.Statified.mediaplayer?.getCurrentPosition() as Int
                 SongPlayingFragment.Statified.mediaplayer?.seekTo(trackPosition)
                 SongPlayingFragment.Statified.mediaplayer?.start()
                 playPauseButton?.setBackgroundResource(R.drawable.pause_icon)
