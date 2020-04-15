@@ -361,8 +361,7 @@ class SongPlayingFragment : Fragment() {
         val visualizationHandler = DbmHandler.Factory.newVisualizerHandler(Statified.myActivity as Context, 0)
         Statified.audioVisualization?.linkTo(visualizationHandler)
 
-        val prefsForShuffle =
-            Statified.myActivity?.getSharedPreferences(Staticated.MY_PREFS_SHUFFLE, Context.MODE_PRIVATE)
+        val prefsForShuffle = Statified.myActivity?.getSharedPreferences(Staticated.MY_PREFS_SHUFFLE, Context.MODE_PRIVATE)
         val isShuffleAllowed = prefsForShuffle?.getBoolean("feature", false)
         if (isShuffleAllowed as Boolean) {
             Statified.currentSongHelper?.isShuffle = true
@@ -373,7 +372,8 @@ class SongPlayingFragment : Fragment() {
             Statified.currentSongHelper?.isShuffle = false
             Statified.shuffleImageButton?.setBackgroundResource(R.drawable.shuffle_white_icon)
         }
-        val prefsForLoop = Statified.myActivity?.getSharedPreferences(Staticated.MY_PREFS_SHUFFLE, Context.MODE_PRIVATE)
+
+        val prefsForLoop = Statified.myActivity?.getSharedPreferences(Staticated.MY_PREFS_LOOP, Context.MODE_PRIVATE)
         val isLoopAllowed = prefsForLoop?.getBoolean("feature", false)
         if (isLoopAllowed as Boolean) {
             Statified.currentSongHelper?.isShuffle = false
