@@ -36,12 +36,14 @@ class NavigationDrawerAdapter(_contentList: ArrayList<String>, _getImages: IntAr
                         .beginTransaction()
                         .replace(R.id.details_fragment,mainScreenFragment)
                         .commit()
+
                 }
                 1 -> {
                     val settingsFragment = SettingsFragment()
                     (mContext as MainActivity).supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.details_fragment,settingsFragment)
+                        .addToBackStack("Settings")
                         .commit()
                 }
                 2 -> {
@@ -49,6 +51,7 @@ class NavigationDrawerAdapter(_contentList: ArrayList<String>, _getImages: IntAr
                     (mContext as MainActivity).supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.details_fragment,aboutUsFragment)
+                        .addToBackStack("About Us")
                         .commit()
                 }
             }

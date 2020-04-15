@@ -41,7 +41,7 @@ class SongPlayingFragment : Fragment() {
         var previousImageButton: ImageButton? = null
         var nextImageButton: ImageButton? = null
         var loopImageButton: ImageButton? = null
-        var seekbar: SeekBar? = null
+        var seekBar: SeekBar? = null
         var songArtistView: TextView? = null
         var songTitleView: TextView? = null
         var shuffleImageButton: ImageButton? = null
@@ -70,7 +70,7 @@ class SongPlayingFragment : Fragment() {
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(
                                     getCurrent.toLong()
                                 )))
-                seekbar?.progress = getCurrent.toInt()
+                seekBar?.progress = getCurrent.toInt()
                 Handler().postDelayed(this, 1000)
             }
         }
@@ -138,8 +138,8 @@ class SongPlayingFragment : Fragment() {
         fun processInformation(mediaPlayer: MediaPlayer) {
             val finalTime = mediaPlayer.duration
             val startTime = mediaPlayer.currentPosition
-            Statified.seekbar?.max = finalTime
-            Statified.seekbar?.progress = startTime
+            Statified.seekBar?.max = finalTime
+            Statified.seekBar?.progress = startTime
             Statified.startTimeText?.text = String.format(
                 "%d:%d",
                 TimeUnit.MILLISECONDS.toMinutes(startTime.toLong()),
@@ -158,7 +158,7 @@ class SongPlayingFragment : Fragment() {
                     )
                 )
             )
-            Statified.seekbar?.progress = startTime
+            Statified.seekBar?.progress = startTime
             Handler().postDelayed(Statified.updateSongTime, 1000)
         }
 
@@ -211,7 +211,7 @@ class SongPlayingFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_song_playing, container, false)
         setHasOptionsMenu(true)
         activity?.title = "Now Playing"
-        Statified.seekbar = view?.findViewById(R.id.seekBar)
+        Statified.seekBar = view?.findViewById(R.id.seekBar)
         Statified.startTimeText = view?.findViewById(R.id.startTime)
         Statified.endTimeText = view?.findViewById(R.id.endTime)
         Statified.playPauseImageButton = view?.findViewById(R.id.playPauseButton)
@@ -465,7 +465,7 @@ class SongPlayingFragment : Fragment() {
             }
         }
 
-        Statified.seekbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        Statified.seekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
             }
 
@@ -473,8 +473,8 @@ class SongPlayingFragment : Fragment() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                Statified.seekbar?.progress = Statified.seekbar?.progress as Int
-                Statified.mediaplayer?.seekTo(Statified.seekbar?.progress as Int)
+                Statified.seekBar?.progress = Statified.seekBar?.progress as Int
+                Statified.mediaplayer?.seekTo(Statified.seekBar?.progress as Int)
             }
         })
 

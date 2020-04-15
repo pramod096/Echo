@@ -5,10 +5,10 @@
         android:clickable="true"
         android:background="#ffffff">
 
-    <ImageView android:layout_width="150dp" android:layout_height="150dp"
-               android:src="@drawable/pramod_2"
+    <ImageView android:layout_width="400dp" android:layout_height="400dp"
+               android:src="@drawable/profile"
                android:layout_centerHorizontal="true"
-               android:layout_marginTop="250dp"
+               android:layout_centerInParent="true"
                android:id="@+id/profile_image"
     />
 
