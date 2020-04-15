@@ -45,7 +45,6 @@ class SongPlayingFragment : Fragment() {
         var songArtistView: TextView? = null
         var songTitleView: TextView? = null
         var shuffleImageButton: ImageButton? = null
-        var setup: MainScreenFragment? = null
 
 
         var currentPosition: Int = 0
