@@ -18,11 +18,12 @@ import com.example.echo.adapters.NavigationDrawerAdapter
 import com.example.echo.fragments.MainScreenFragment
 import com.example.echo.fragments.SongPlayingFragment
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity(){
 
-    var navigationDrawerIconsList: ArrayList<String> = arrayListOf()
-    var images_for_navdrawer = intArrayOf(R.drawable.navigation_allsongs,R.drawable.navigation_favorites,R.drawable.navigation_settings,R.drawable.navigation_aboutus)
-    var trackNotificationBuilder: Notification? = null
+    private var navigationDrawerIconsList: ArrayList<String> = arrayListOf()
+    private var imagesForNavdrawer = intArrayOf(R.drawable.navigation_allsongs,R.drawable.navigation_favorites,R.drawable.navigation_settings,R.drawable.navigation_aboutus)
+    private var trackNotificationBuilder: Notification? = null
 
     object Statified{
         var drawerLayout: DrawerLayout? = null
@@ -36,17 +37,17 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        MainActivity.Statified.drawerLayout = findViewById(R.id.drawer_Layout)
+        Statified.drawerLayout = findViewById(R.id.drawer_Layout)
 
         navigationDrawerIconsList.add("All Songs")
         navigationDrawerIconsList.add("Favourites")
         navigationDrawerIconsList.add("Settings")
         navigationDrawerIconsList.add("About Us")
-        val toggle = ActionBarDrawerToggle(this@MainActivity,MainActivity.Statified.drawerLayout,toolbar,
+        val toggle = ActionBarDrawerToggle(this@MainActivity, Statified.drawerLayout,toolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-        MainActivity.Statified.drawerLayout?.addDrawerListener(toggle)
+        Statified.drawerLayout?.addDrawerListener(toggle)
         toggle.syncState()
         val mainScreenFragment = MainScreenFragment()
         this.supportFragmentManager
@@ -54,14 +55,14 @@ class MainActivity : AppCompatActivity(){
             .add(R.id.details_fragment,mainScreenFragment,"MainScreenFragment")
             .commit()
 
-        var _navigationAdapter = NavigationDrawerAdapter(navigationDrawerIconsList,images_for_navdrawer,this)
-        _navigationAdapter.notifyDataSetChanged()
+        val navigationDrawerAdapter = NavigationDrawerAdapter(navigationDrawerIconsList,imagesForNavdrawer,this)
+        navigationDrawerAdapter.notifyDataSetChanged()
 
-        var navigation_recycler_view = findViewById<RecyclerView>(R.id.navigation_recycler_view)
-        navigation_recycler_view.layoutManager = LinearLayoutManager(this)
-        navigation_recycler_view.itemAnimator = DefaultItemAnimator()
-        navigation_recycler_view.adapter = _navigationAdapter
-        navigation_recycler_view.setHasFixedSize(true)
+        val navigationRecyclerView = findViewById<RecyclerView>(R.id.navigation_recycler_view)
+        navigationRecyclerView.layoutManager = LinearLayoutManager(this)
+        navigationRecyclerView.itemAnimator = DefaultItemAnimator()
+        navigationRecyclerView.adapter = navigationDrawerAdapter
+        navigationRecyclerView.setHasFixedSize(true)
 
         val intent = Intent(this@MainActivity, MainActivity::class.java)
         val pIntent = PendingIntent.getActivity(this@MainActivity, System.currentTimeMillis().toInt(),

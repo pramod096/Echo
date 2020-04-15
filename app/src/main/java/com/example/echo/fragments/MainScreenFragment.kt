@@ -1,6 +1,7 @@
 package com.example.echo.fragments
 
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.media.MediaPlayer
@@ -26,16 +27,16 @@ import kotlin.collections.ArrayList
  */
 class MainScreenFragment : Fragment() {
 
-    var getSongsList: ArrayList<Songs>? = null
-    var nowPlayingBottomBar: RelativeLayout? = null
-    var playPauseButton: ImageButton? = null
-    var songTitle: TextView? = null
-    var visibleLayout: RelativeLayout? = null
-    var noSongs: RelativeLayout? = null
-    var recyclerView: RecyclerView? = null
-    var myActivity: Activity? = null
-    var trackPosition: Int = 0
-    var _mainScreenAdapter: MainScreenAdapter? = null
+    private var getSongsList: ArrayList<Songs>? = null
+    private var nowPlayingBottomBar: RelativeLayout? = null
+    private var playPauseButton: ImageButton? = null
+    private var songTitle: TextView? = null
+    private var visibleLayout: RelativeLayout? = null
+    private var noSongs: RelativeLayout? = null
+    private var recyclerView: RecyclerView? = null
+    private var myActivity: Activity? = null
+    private var trackPosition: Int = 0
+    private var _mainScreenAdapter: MainScreenAdapter? = null
 
     object Statified {
         var mediaPlayer: MediaPlayer? = null
@@ -49,12 +50,12 @@ class MainScreenFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_main_screen, container, false)
         setHasOptionsMenu(true)
         activity?.title = "All Songs"
-        visibleLayout = view?.findViewById<RelativeLayout>(R.id.visibleLayout)
-        noSongs = view?.findViewById<RelativeLayout>(R.id.noSongs)
-        nowPlayingBottomBar = view?.findViewById<RelativeLayout>(R.id.hiddenBarMainScreen)
-        songTitle = view?.findViewById<TextView>(R.id.songTitleMainScreen)
-        playPauseButton = view?.findViewById<ImageButton>(R.id.playPauseButton)
-        recyclerView = view?.findViewById<RecyclerView>(R.id.contentMain)
+        visibleLayout = view?.findViewById(R.id.visibleLayout)
+        noSongs = view?.findViewById(R.id.noSongs)
+        nowPlayingBottomBar = view?.findViewById(R.id.hiddenBarMainScreen)
+        songTitle = view?.findViewById(R.id.songTitleMainScreen)
+        playPauseButton = view?.findViewById(R.id.playPauseButton)
+        recyclerView = view?.findViewById(R.id.contentMain)
 
         return view
     }
@@ -68,8 +69,8 @@ class MainScreenFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         getSongsList = getSongsFromPhone()
         val prefs = activity?.getSharedPreferences("action_sort", Context.MODE_PRIVATE)
-        val action_sort_ascending = prefs?.getString("action_sort_ascending", "true")
-        val action_sort_recent = prefs?.getString("action_sort_recent", "false")
+        val actionSortAscending = prefs?.getString("action_sort_ascending", "true")
+        val actionSortRecent = prefs?.getString("action_sort_recent", "false")
         if (getSongsList == null) {
             visibleLayout?.visibility = View.INVISIBLE
             noSongs?.visibility = View.VISIBLE
@@ -83,10 +84,10 @@ class MainScreenFragment : Fragment() {
 
 
         if (getSongsList != null) {
-            if (action_sort_ascending!!.equals("true", true)) {
+            if (actionSortAscending!!.equals("true", true)) {
                 Collections.sort(getSongsList, Songs.Statified.nameComparator)
                 _mainScreenAdapter?.notifyDataSetChanged()
-            } else if (action_sort_recent!!.equals("true", true)) {
+            } else if (actionSortRecent!!.equals("true", true)) {
                 Collections.sort(getSongsList, Songs.Statified.dateComparator)
                 _mainScreenAdapter?.notifyDataSetChanged()
             }
@@ -131,16 +132,18 @@ class MainScreenFragment : Fragment() {
         myActivity = context as Activity
     }
 
+    @Suppress("DEPRECATION")
     override fun onAttach(activity: Activity?) {
         super.onAttach(activity)
         myActivity = activity
     }
 
+    @SuppressLint("Recycle")
     fun getSongsFromPhone(): ArrayList<Songs> {
-        var arrayList = ArrayList<Songs>()
-        var contentResolver = myActivity?.contentResolver
-        var songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        var songCursor = contentResolver?.query(songUri, null, null, null)
+        val arrayList = ArrayList<Songs>()
+        val contentResolver = myActivity?.contentResolver
+        val songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        val songCursor = contentResolver?.query(songUri, null, null, null)
         if (songCursor != null && songCursor.moveToFirst()) {
             val songId = songCursor.getColumnIndex(MediaStore.Audio.Media._ID)
             val songTitle = songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
@@ -148,25 +151,25 @@ class MainScreenFragment : Fragment() {
             val songData = songCursor.getColumnIndex(MediaStore.Audio.Media.DATA)
             val dateIndex = songCursor.getColumnIndex(MediaStore.Audio.Media.DATE_ADDED)
             while (songCursor.moveToNext()) {
-                var currentId = songCursor.getLong(songId)
-                var currentTitle = songCursor.getString(songTitle)
-                var currentArtist = songCursor.getString(songArtist)
-                var currentData = songCursor.getString(songData)
-                var currentDate = songCursor.getLong(dateIndex)
+                val currentId = songCursor.getLong(songId)
+                val currentTitle = songCursor.getString(songTitle)
+                val currentArtist = songCursor.getString(songArtist)
+                val currentData = songCursor.getString(songData)
+                val currentDate = songCursor.getLong(dateIndex)
                 arrayList.add(Songs(currentId, currentTitle, currentArtist, currentData, currentDate))
             }
         }
         return arrayList
     }
 
-    fun bottomBarSetup() {
+    private fun bottomBarSetup() {
         try {
             bottomBarClickHandler()
-            songTitle?.setText(SongPlayingFragment.Statified.currentSongHelper?.songTitle)
-            SongPlayingFragment.Statified.mediaplayer?.setOnCompletionListener({
-                songTitle?.setText(SongPlayingFragment.Statified.currentSongHelper?.songTitle)
+            songTitle?.text = SongPlayingFragment.Statified.currentSongHelper?.songTitle
+            SongPlayingFragment.Statified.mediaplayer?.setOnCompletionListener {
+                songTitle?.text = SongPlayingFragment.Statified.currentSongHelper?.songTitle
                 SongPlayingFragment.Staticated.onSongComplete()
-            })
+            }
             if (SongPlayingFragment.Statified.currentSongHelper?.isPlaying as Boolean) {
                 nowPlayingBottomBar?.visibility = View.VISIBLE
             } else {
@@ -177,18 +180,18 @@ class MainScreenFragment : Fragment() {
         }
     }
 
-    fun bottomBarClickHandler() {
-        nowPlayingBottomBar?.setOnClickListener({
+    private fun bottomBarClickHandler() {
+        nowPlayingBottomBar?.setOnClickListener {
             Statified.mediaPlayer = SongPlayingFragment.Statified.mediaplayer
             val songPlayingFragment = SongPlayingFragment()
-            var args = Bundle()
+            val args = Bundle()
             args.putString("songArtist", SongPlayingFragment.Statified.currentSongHelper?.songArtist)
             args.putString("songTitle", SongPlayingFragment.Statified.currentSongHelper?.songTitle)
             args.putString("path", SongPlayingFragment.Statified.currentSongHelper?.songPath)
             args.putInt("songId", SongPlayingFragment.Statified.currentSongHelper?.songId?.toInt() as Int)
             args.putInt(
                 "songPosition",
-                SongPlayingFragment.Statified.currentSongHelper?.currentPosition?.toInt() as Int
+                SongPlayingFragment.Statified.currentSongHelper?.currentPosition as Int
             )
             args.putParcelableArrayList("songData", SongPlayingFragment.Statified.fetchSongs)
             args.putString("MainBottomBar", "success")
@@ -197,21 +200,21 @@ class MainScreenFragment : Fragment() {
                 ?.replace(R.id.details_fragment, songPlayingFragment)
                 ?.addToBackStack("SongPlayingFragment")
                 ?.commit()
-        })
+        }
 
-        playPauseButton?.setOnClickListener({
+        playPauseButton?.setOnClickListener {
             if (SongPlayingFragment.Statified.mediaplayer?.isPlaying as Boolean) {
 
                 SongPlayingFragment.Statified.mediaplayer?.pause()
-                trackPosition = SongPlayingFragment.Statified.mediaplayer?.getCurrentPosition() as Int
+                trackPosition = SongPlayingFragment.Statified.mediaplayer?.currentPosition as Int
                 playPauseButton?.setBackgroundResource(R.drawable.play_icon)
             } else {
-                trackPosition = SongPlayingFragment.Statified.mediaplayer?.getCurrentPosition() as Int
+                trackPosition = SongPlayingFragment.Statified.mediaplayer?.currentPosition as Int
                 SongPlayingFragment.Statified.mediaplayer?.seekTo(trackPosition)
                 SongPlayingFragment.Statified.mediaplayer?.start()
                 playPauseButton?.setBackgroundResource(R.drawable.pause_icon)
             }
-        })
+        }
     }
 
 

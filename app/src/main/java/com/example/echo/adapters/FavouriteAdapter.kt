@@ -15,21 +15,21 @@ import com.example.echo.fragments.SongPlayingFragment
 
 class FavouriteAdapter(_songDetails: ArrayList<Songs>, _context: Context) : RecyclerView.Adapter<FavouriteAdapter.MyViewHolder>() {
 
-    var songDetails: ArrayList<Songs>? = null
-    var mContext: Context? = null
+    private var songDetails: ArrayList<Songs>? = null
+    private var mContext: Context? = null
 
     init {
         this.songDetails = _songDetails
         this.mContext = _context
     }
 
-    override fun onBindViewHolder(holder: FavouriteAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val songObject = songDetails?.get(position)
         holder.trackTitle?.text = songObject?.songTitle
         holder.trackArtist?.text = songObject?.artist
-        holder.contentHolder?.setOnClickListener({
+        holder.contentHolder?.setOnClickListener {
             val songPlayingFragment = SongPlayingFragment()
-            var args = Bundle()
+            val args = Bundle()
             args.putString("songArtist", songObject?.artist)
             args.putString("songTitle", songObject?.songTitle)
             args.putString("path", songObject?.songData)
@@ -42,22 +42,22 @@ class FavouriteAdapter(_songDetails: ArrayList<Songs>, _context: Context) : Recy
                 .replace(R.id.details_fragment, songPlayingFragment)
                 .addToBackStack("SongPlayingFragment")
                 .commit()
-        })
+        }
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent?.context)
+        val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.row_custom_favscreen_adapter,parent,false)
 
         return MyViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
-        if(songDetails == null){
-            return 0
+        return if(songDetails == null){
+            0
         }else{
-            return (songDetails as ArrayList<Songs>).size
+            (songDetails as ArrayList<Songs>).size
         }
     }
 
@@ -67,9 +67,9 @@ class FavouriteAdapter(_songDetails: ArrayList<Songs>, _context: Context) : Recy
         var contentHolder: RelativeLayout? = null
 
         init {
-            trackTitle = view.findViewById<TextView>(R.id.trackTitle)
-            trackArtist = view.findViewById<TextView>(R.id.trackArtist)
-            contentHolder = view.findViewById<RelativeLayout>(R.id.contentRowFav)
+            trackTitle = view.findViewById(R.id.trackTitle)
+            trackArtist = view.findViewById(R.id.trackArtist)
+            contentHolder = view.findViewById(R.id.contentRowFav)
         }
     }
 

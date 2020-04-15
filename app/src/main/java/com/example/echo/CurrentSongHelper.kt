@@ -17,5 +17,4 @@ class CurrentSongHelper {
 
     var isShuffle: Boolean = false
 
-    var trackPosition: Int = 0
 }

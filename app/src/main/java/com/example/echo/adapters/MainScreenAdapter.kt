@@ -16,8 +16,8 @@ import com.example.echo.fragments.SongPlayingFragment
 
 class MainScreenAdapter(_songDetails: ArrayList<Songs>, _context: Context) : RecyclerView.Adapter<MainScreenAdapter.MyViewHolder>() {
 
-    var songDetails: ArrayList<Songs>? = null
-    var mContext: Context? = null
+    private var songDetails: ArrayList<Songs>? = null
+    private var mContext: Context? = null
 
     init {
         this.songDetails = _songDetails
@@ -28,9 +28,9 @@ class MainScreenAdapter(_songDetails: ArrayList<Songs>, _context: Context) : Rec
         val songObject = songDetails?.get(position)
         holder.trackTitle?.text = songObject?.songTitle
         holder.trackArtist?.text = songObject?.artist
-        holder.contentHolder?.setOnClickListener({
+        holder.contentHolder?.setOnClickListener {
             val songPlayingFragment = SongPlayingFragment()
-            var args = Bundle()
+            val args = Bundle()
             args.putString("songArtist", songObject?.artist)
             args.putString("songTitle", songObject?.songTitle)
             args.putString("path", songObject?.songData)
@@ -39,28 +39,28 @@ class MainScreenAdapter(_songDetails: ArrayList<Songs>, _context: Context) : Rec
             args.putParcelableArrayList("songData", songDetails)
             songPlayingFragment.arguments = args
             (mContext as FragmentActivity).supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.details_fragment, songPlayingFragment)
+                .beginTransaction()
+                .replace(R.id.details_fragment, songPlayingFragment)
                 .addToBackStack("SongPlayingFragment")
-            .commit()
+                .commit()
             if( SongPlayingFragment.Statified.currentSongHelper?.isPlaying == true) {
                 SongPlayingFragment.Statified.mediaplayer?.reset()
             }
-        })
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent?.context)
+        val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.row_custom_mainscreen_adapter,parent,false)
 
         return MyViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
-        if(songDetails == null){
-            return 0
+        return if(songDetails == null){
+            0
         }else{
-            return (songDetails as ArrayList<Songs>).size
+            (songDetails as ArrayList<Songs>).size
         }
     }
 
@@ -70,9 +70,9 @@ class MainScreenAdapter(_songDetails: ArrayList<Songs>, _context: Context) : Rec
         var contentHolder: RelativeLayout? = null
 
         init {
-            trackTitle = view.findViewById<TextView>(R.id.trackTitle)
-            trackArtist = view.findViewById<TextView>(R.id.trackArtist)
-            contentHolder = view.findViewById<RelativeLayout>(R.id.contentRowMain)
+            trackTitle = view.findViewById(R.id.trackTitle)
+            trackArtist = view.findViewById(R.id.trackArtist)
+            contentHolder = view.findViewById(R.id.contentRowMain)
         }
     }
 

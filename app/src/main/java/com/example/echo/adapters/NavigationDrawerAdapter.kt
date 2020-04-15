@@ -17,9 +17,9 @@ import com.example.echo.fragments.SettingsFragment
 
 class NavigationDrawerAdapter(_contentList: ArrayList<String>, _getImages: IntArray, _context: Context)
     : RecyclerView.Adapter<NavigationDrawerAdapter.NavViewHolder>() {
-    var contentList: ArrayList<String>? = null
-    var getImages: IntArray? = null
-    var mContext: Context? = null
+    private var contentList: ArrayList<String>? = null
+    private var getImages: IntArray? = null
+    private var mContext: Context? = null
 
     init {
         this.contentList = _contentList
@@ -27,44 +27,48 @@ class NavigationDrawerAdapter(_contentList: ArrayList<String>, _getImages: IntAr
         this.mContext = _context
     }
     override fun onBindViewHolder(holder: NavViewHolder, position: Int) {
-        holder?.icon_GET?.setBackgroundResource(getImages?.get(position) as Int)
-        holder?.text_GET?.setText(contentList?.get(position))
-        holder?.contentHolder?.setOnClickListener({
-            if(position == 0){
-                val mainScreenFragment = MainScreenFragment()
-                (mContext as MainActivity).supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.details_fragment,mainScreenFragment)
-                    .commit()
-            }else if(position == 1){
-                val favouriteFragment = FavouriteFragment()
-                (mContext as MainActivity).supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.details_fragment,favouriteFragment)
-                    .commit()
-            }else if(position == 2){
-                val settingsFragment = SettingsFragment()
-                (mContext as MainActivity).supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.details_fragment,settingsFragment)
-                    .commit()
-            }else if(position == 3){
-                val aboutUsFragment = AboutUsFragment()
-                (mContext as MainActivity).supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.details_fragment,aboutUsFragment)
-                    .commit()
+        holder.iconGet?.setBackgroundResource(getImages?.get(position) as Int)
+        holder.textGet?.text = contentList?.get(position)
+        holder.contentHolder?.setOnClickListener {
+            when (position) {
+                0 -> {
+                    val mainScreenFragment = MainScreenFragment()
+                    (mContext as MainActivity).supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.details_fragment,mainScreenFragment)
+                        .commit()
+                }
+                1 -> {
+                    val favouriteFragment = FavouriteFragment()
+                    (mContext as MainActivity).supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.details_fragment,favouriteFragment)
+                        .commit()
+                }
+                2 -> {
+                    val settingsFragment = SettingsFragment()
+                    (mContext as MainActivity).supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.details_fragment,settingsFragment)
+                        .commit()
+                }
+                3 -> {
+                    val aboutUsFragment = AboutUsFragment()
+                    (mContext as MainActivity).supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.details_fragment,aboutUsFragment)
+                        .commit()
+                }
             }
-            MainActivity.Statified.drawerLayout?.closeDrawers()})
+            MainActivity.Statified.drawerLayout?.closeDrawers()}
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NavViewHolder {
 
-        var itemView = LayoutInflater.from(parent?.context)
+        val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.row_custom_navigationdrawer,parent,false)
-        val returnThis = NavViewHolder(itemView)
-        return returnThis
+        return NavViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
@@ -73,13 +77,13 @@ class NavigationDrawerAdapter(_contentList: ArrayList<String>, _getImages: IntAr
 
 
     class NavViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            var icon_GET: ImageView? = null
-            var text_GET: TextView? = null
+            var iconGet: ImageView? = null
+            var textGet: TextView? = null
             var contentHolder: RelativeLayout? = null
         init {
-            icon_GET = itemView?.findViewById(R.id.icon_navdrawer)
-            text_GET = itemView?.findViewById(R.id.text_navdrawer)
-            contentHolder = itemView?.findViewById(R.id.navdrawer_item_content_holder)
+            iconGet = itemView.findViewById(R.id.icon_navdrawer)
+            textGet = itemView.findViewById(R.id.text_navdrawer)
+            contentHolder = itemView.findViewById(R.id.navdrawer_item_content_holder)
         }
     }
 }

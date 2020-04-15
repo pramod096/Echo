@@ -19,14 +19,14 @@ class CaptureBroadcast : BroadcastReceiver() {
             try {
                 if (SongPlayingFragment.Statified.mediaplayer?.isPlaying as Boolean) {
                     SongPlayingFragment.Statified.mediaplayer?.pause()
-                    SongPlayingFragment.Statified.playpauseImageButton?.setBackgroundResource(R.drawable.play_icon)
+                    SongPlayingFragment.Statified.playPauseImageButton?.setBackgroundResource(R.drawable.play_icon)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         } else {
             val tm: TelephonyManager = context?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-            when (tm?.callState) {
+            when (tm.callState) {
                 TelephonyManager.CALL_STATE_RINGING -> {
                     try {
                         MainActivity.Statified.notificationManager?.cancel(1978)
@@ -36,7 +36,7 @@ class CaptureBroadcast : BroadcastReceiver() {
                     try {
                         if (SongPlayingFragment.Statified.mediaplayer?.isPlaying as Boolean) {
                             SongPlayingFragment.Statified.mediaplayer?.pause()
-                            SongPlayingFragment.Statified.playpauseImageButton?.setBackgroundResource(R.drawable.play_icon)
+                            SongPlayingFragment.Statified.playPauseImageButton?.setBackgroundResource(R.drawable.play_icon)
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()

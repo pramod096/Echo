@@ -12,7 +12,7 @@ import androidx.core.app.ActivityCompat
 import com.example.echo.R
 
 class SplashActivity : AppCompatActivity() {
-    var permissionsString = arrayOf(
+    private var permissionsString = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.MODIFY_AUDIO_SETTINGS,
         Manifest.permission.READ_PHONE_STATE,
@@ -58,7 +58,7 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    fun hasPermissions(context: Context, vararg permissions: String): Boolean {
+    private fun hasPermissions(context: Context, vararg permissions: String): Boolean {
         var hasAllPermissions = true
         for (permission in permissions) {
             val res = context.checkCallingOrSelfPermission(permission)
@@ -69,9 +69,9 @@ class SplashActivity : AppCompatActivity() {
         return hasAllPermissions
     }
 
-    fun delayer() {
+    private fun delayer() {
         Handler().postDelayed({
-            var startAct = Intent(this@SplashActivity, MainActivity::class.java)
+            val startAct = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(startAct)
             this.finish()
         }, 1000)

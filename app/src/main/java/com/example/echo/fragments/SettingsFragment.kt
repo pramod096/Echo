@@ -16,7 +16,7 @@ import com.example.echo.fragments.SettingsFragment.Statified.shakeSwitch
 
 class SettingsFragment : Fragment() {
 
-    var myActivity: Activity? = null
+    private var myActivity: Activity? = null
     object Statified{
         var MY_PREFS_NAME = "ShakeFeature"
         var shakeSwitch: Switch? = null
@@ -26,7 +26,7 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater!!.inflate(R.layout.fragment_settings, container,false)
+        val view = inflater.inflate(R.layout.fragment_settings, container,false)
         activity?.title = "Settings"
         shakeSwitch = view?.findViewById(R.id.swithchShake)
         return view
@@ -42,21 +42,13 @@ class SettingsFragment : Fragment() {
         myActivity = context as Activity
     }
 
-    override fun onAttach(activity: Activity?) {
-        super.onAttach(activity)
-        myActivity = activity
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val prefs = myActivity?.getSharedPreferences(Statified.MY_PREFS_NAME,Context.MODE_PRIVATE)
         val isAllowed = prefs?.getBoolean("feature",false)
-        if(isAllowed as Boolean){
-            shakeSwitch?.isChecked = true
-        }else{
-            shakeSwitch?.isChecked = false
-        }
-        shakeSwitch?.setOnCheckedChangeListener({compoundButton, b ->
+        shakeSwitch?.isChecked = isAllowed as Boolean
+        shakeSwitch?.setOnCheckedChangeListener { _, b ->
             if(b){
                 val editor = myActivity?.getSharedPreferences(Statified.MY_PREFS_NAME,Context.MODE_PRIVATE)?.edit()
                 editor?.putBoolean("feature",true)
@@ -66,12 +58,12 @@ class SettingsFragment : Fragment() {
                 editor?.putBoolean("feature",false)
                 editor?.apply()
             }
-        })
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?) {
         super.onPrepareOptionsMenu(menu)
-        var item = menu?.findItem(R.id.action_sort)
+        val item = menu?.findItem(R.id.action_sort)
         item?.isVisible = false
     }
 
