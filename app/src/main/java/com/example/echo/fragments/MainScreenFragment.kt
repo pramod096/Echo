@@ -211,11 +211,13 @@ class MainScreenFragment : Fragment() {
                 SongPlayingFragment.Statified.mediaplayer?.pause()
                 trackPosition = SongPlayingFragment.Statified.mediaplayer?.currentPosition as Int
                 playPauseImageButton?.setBackgroundResource(R.drawable.play_icon)
+                currentSongHelper?.isSong = false
             } else {
                 trackPosition = SongPlayingFragment.Statified.mediaplayer?.currentPosition as Int
                 SongPlayingFragment.Statified.mediaplayer?.seekTo(trackPosition)
                 SongPlayingFragment.Statified.mediaplayer?.start()
                 playPauseImageButton?.setBackgroundResource(R.drawable.pause_icon)
+                currentSongHelper?.isSong = true
             }
         }
     }

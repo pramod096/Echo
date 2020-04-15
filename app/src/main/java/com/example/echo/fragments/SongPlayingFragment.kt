@@ -333,6 +333,7 @@ class SongPlayingFragment : Fragment() {
         val fromMainBottomBar = arguments?.get("MainBottomBar") as? String
         if (fromMainBottomBar != null) {
             Statified.mediaplayer = MainScreenFragment.Statified.mediaPlayer
+            Statified.currentSongHelper?.isSong = Statified.mediaplayer?.isPlaying as Boolean
         } else {
             Statified.mediaplayer = MediaPlayer()
             @Suppress("DEPRECATION")
@@ -534,7 +535,7 @@ class SongPlayingFragment : Fragment() {
                 val delta = mAccelerationCurrent - mAccelerationLast
                 mAcceleration = mAcceleration * 0.9f + delta
 
-                if (mAcceleration > 12) {
+                if (mAcceleration > 10) {
                     val prefs =
                         Statified.myActivity?.getSharedPreferences(Statified.MY_PREFS_NAME, Context.MODE_PRIVATE)
                     val isAllowed = prefs?.getBoolean("feature", false)
