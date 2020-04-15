@@ -4,6 +4,8 @@ package com.example.echo.fragments
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.provider.MediaStore
@@ -30,7 +32,6 @@ class MainScreenFragment : Fragment() {
 
     private var getSongsList: ArrayList<Songs>? = null
     private var nowPlayingBottomBar: RelativeLayout? = null
-    private var songTitle: TextView? = null
     private var visibleLayout: RelativeLayout? = null
     private var noSongs: RelativeLayout? = null
     private var recyclerView: RecyclerView? = null
@@ -40,6 +41,7 @@ class MainScreenFragment : Fragment() {
 
     object Statified {
         var mediaPlayer: MediaPlayer? = null
+         var songTitle: TextView? = null
     }
 
     override fun onCreateView(
@@ -53,7 +55,7 @@ class MainScreenFragment : Fragment() {
         visibleLayout = view?.findViewById(R.id.visibleLayout)
         noSongs = view?.findViewById(R.id.noSongs)
         nowPlayingBottomBar = view?.findViewById(R.id.hiddenBarMainScreen)
-        songTitle = view?.findViewById(R.id.songTitleMainScreen)
+        Statified.songTitle = view?.findViewById(R.id.songTitleMainScreen)
         playPauseImageButton = view?.findViewById(R.id.playPauseButton)
         recyclerView = view?.findViewById(R.id.contentMain)
 
@@ -97,6 +99,11 @@ class MainScreenFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        SongPlayingFragment.Statified.audioVisualization?.onResume()
+        SongPlayingFragment.Statified.mSensorManager?.registerListener(
+            SongPlayingFragment.Statified.mSensorListener,
+            SongPlayingFragment.Statified.mSensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+            SensorManager.SENSOR_DELAY_NORMAL)
         bottomBarSetup()
     }
 
@@ -167,10 +174,10 @@ class MainScreenFragment : Fragment() {
 
             bottomBarClickHandler()
 
-            songTitle?.text = currentSongHelper?.songTitle
+            Statified.songTitle?.text = currentSongHelper?.songTitle
             SongPlayingFragment.Statified.mediaplayer?.setOnCompletionListener {
                 SongPlayingFragment.Staticated.onSongComplete()
-                songTitle?.text = currentSongHelper?.songTitle
+                Statified.songTitle?.text = currentSongHelper?.songTitle
             }
             if (currentSongHelper?.isPlaying as Boolean) {
                 nowPlayingBottomBar?.visibility = View.VISIBLE

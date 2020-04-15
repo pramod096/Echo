@@ -165,6 +165,7 @@ class SongPlayingFragment : Fragment() {
         fun playNext(check: String) {
             if (check.equals("PlayNextNormal", true)) {
                 Statified.currentPosition = Statified.currentPosition + 1
+                Statified.currentSongHelper?.isSong = true
             } else if (check.equals("PlayNextLikeNormalShuffle", true)) {
                 val randomObject = Random()
                 val randomPosition = randomObject.nextInt(Statified.fetchSongs?.size?.plus(1) as Int)
@@ -267,7 +268,7 @@ class SongPlayingFragment : Fragment() {
         mAcceleration = 0.0f
         mAccelerationCurrent = SensorManager.GRAVITY_EARTH
         mAccelerationLast = SensorManager.GRAVITY_EARTH
-        bindShakeListener()
+        Statiated.bindShakeListener()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -517,8 +518,8 @@ class SongPlayingFragment : Fragment() {
         }
 
     }
-
-    private fun bindShakeListener() {
+object Statiated{
+    fun bindShakeListener() {
         Statified.mSensorListener = object : SensorEventListener {
             override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
 
@@ -536,14 +537,23 @@ class SongPlayingFragment : Fragment() {
 
                 if (mAcceleration > 10) {
                     val prefs =
-                        Statified.myActivity?.getSharedPreferences(Statified.MY_PREFS_NAME, Context.MODE_PRIVATE)
+                        Statified.myActivity?.getSharedPreferences(
+                            Statified.MY_PREFS_NAME,
+                            Context.MODE_PRIVATE
+                        )
                     val isAllowed = prefs?.getBoolean("feature", false)
                     if (isAllowed as Boolean) {
                         Staticated.playNext("PlayNextNormal")
+
+                        if(Statified.mediaplayer?.isPlaying as Boolean)
+                            Statified.playPauseImageButton?.setBackgroundResource(R.drawable.pause_icon)
+                            MainScreenFragment.Statified.songTitle?.text = Statified.currentSongHelper?.songTitle
                     }
 
                 }
+
             }
+        }
         }
     }
 }
