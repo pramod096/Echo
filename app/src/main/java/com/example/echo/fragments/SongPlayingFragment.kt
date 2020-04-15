@@ -544,7 +544,6 @@ object Statiated{
                     val isAllowed = prefs?.getBoolean("feature", false)
                     if (isAllowed as Boolean) {
                         Staticated.playNext("PlayNextNormal")
-
                         if(Statified.mediaplayer?.isPlaying as Boolean)
                             Statified.playPauseImageButton?.setBackgroundResource(R.drawable.pause_icon)
                             MainScreenFragment.Statified.songTitle?.text = Statified.currentSongHelper?.songTitle
