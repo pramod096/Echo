@@ -18,8 +18,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.echo.R
 import com.example.echo.Songs
 import com.example.echo.adapters.MainScreenAdapter
+import com.example.echo.fragments.SongPlayingFragment.Statified.currentSongHelper
 import java.util.*
 import kotlin.collections.ArrayList
+import  com.example.echo.fragments.SongPlayingFragment.Statified.playPauseImageButton
 
 /**
  * A simple [Fragment] subclass.
@@ -29,7 +31,6 @@ class MainScreenFragment : Fragment() {
 
     private var getSongsList: ArrayList<Songs>? = null
     private var nowPlayingBottomBar: RelativeLayout? = null
-    private var playPauseButton: ImageButton? = null
     private var songTitle: TextView? = null
     private var visibleLayout: RelativeLayout? = null
     private var noSongs: RelativeLayout? = null
@@ -54,7 +55,7 @@ class MainScreenFragment : Fragment() {
         noSongs = view?.findViewById(R.id.noSongs)
         nowPlayingBottomBar = view?.findViewById(R.id.hiddenBarMainScreen)
         songTitle = view?.findViewById(R.id.songTitleMainScreen)
-        playPauseButton = view?.findViewById(R.id.playPauseButton)
+        playPauseImageButton = view?.findViewById(R.id.playPauseButton)
         recyclerView = view?.findViewById(R.id.contentMain)
 
         return view
@@ -92,6 +93,11 @@ class MainScreenFragment : Fragment() {
                 _mainScreenAdapter?.notifyDataSetChanged()
             }
         }
+        bottomBarSetup()
+    }
+
+    override fun onResume() {
+        super.onResume()
         bottomBarSetup()
     }
 
@@ -160,13 +166,17 @@ class MainScreenFragment : Fragment() {
     private fun bottomBarSetup() {
         try {
             bottomBarClickHandler()
-            songTitle?.text = SongPlayingFragment.Statified.currentSongHelper?.songTitle
+            songTitle?.text = currentSongHelper?.songTitle
             SongPlayingFragment.Statified.mediaplayer?.setOnCompletionListener {
-                songTitle?.text = SongPlayingFragment.Statified.currentSongHelper?.songTitle
+                songTitle?.text = currentSongHelper?.songTitle
                 SongPlayingFragment.Staticated.onSongComplete()
             }
-            if (SongPlayingFragment.Statified.currentSongHelper?.isPlaying as Boolean) {
+            if (currentSongHelper?.isPlaying as Boolean) {
                 nowPlayingBottomBar?.visibility = View.VISIBLE
+                if(currentSongHelper?.isSong == true)
+                    playPauseImageButton?.setBackgroundResource(R.drawable.pause_icon)
+                else
+                    playPauseImageButton?.setBackgroundResource(R.drawable.play_icon)
             } else {
                 nowPlayingBottomBar?.visibility = View.INVISIBLE
             }
@@ -180,14 +190,11 @@ class MainScreenFragment : Fragment() {
             Statified.mediaPlayer = SongPlayingFragment.Statified.mediaplayer
             val songPlayingFragment = SongPlayingFragment()
             val args = Bundle()
-            args.putString("songArtist", SongPlayingFragment.Statified.currentSongHelper?.songArtist)
-            args.putString("songTitle", SongPlayingFragment.Statified.currentSongHelper?.songTitle)
-            args.putString("path", SongPlayingFragment.Statified.currentSongHelper?.songPath)
-            args.putInt("songId", SongPlayingFragment.Statified.currentSongHelper?.songId?.toInt() as Int)
-            args.putInt(
-                "songPosition",
-                SongPlayingFragment.Statified.currentSongHelper?.currentPosition as Int
-            )
+            args.putString("songArtist", currentSongHelper?.songArtist)
+            args.putString("songTitle", currentSongHelper?.songTitle)
+            args.putString("path", currentSongHelper?.songPath)
+            args.putInt("songId", currentSongHelper?.songId?.toInt() as Int)
+            args.putInt("songPosition", currentSongHelper?.currentPosition as Int)
             args.putParcelableArrayList("songData", SongPlayingFragment.Statified.fetchSongs)
             args.putString("MainBottomBar", "success")
             songPlayingFragment.arguments = args
@@ -197,17 +204,17 @@ class MainScreenFragment : Fragment() {
                 ?.commit()
         }
 
-        playPauseButton?.setOnClickListener {
+        playPauseImageButton?.setOnClickListener {
             if (SongPlayingFragment.Statified.mediaplayer?.isPlaying as Boolean) {
 
                 SongPlayingFragment.Statified.mediaplayer?.pause()
                 trackPosition = SongPlayingFragment.Statified.mediaplayer?.currentPosition as Int
-                playPauseButton?.setBackgroundResource(R.drawable.play_icon)
+                playPauseImageButton?.setBackgroundResource(R.drawable.play_icon)
             } else {
                 trackPosition = SongPlayingFragment.Statified.mediaplayer?.currentPosition as Int
                 SongPlayingFragment.Statified.mediaplayer?.seekTo(trackPosition)
                 SongPlayingFragment.Statified.mediaplayer?.start()
-                playPauseButton?.setBackgroundResource(R.drawable.pause_icon)
+                playPauseImageButton?.setBackgroundResource(R.drawable.pause_icon)
             }
         }
     }

@@ -17,4 +17,6 @@ class CurrentSongHelper {
 
     var isShuffle: Boolean = false
 
+    var isSong: Boolean = false
+
 }

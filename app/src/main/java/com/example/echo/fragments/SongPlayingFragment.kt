@@ -290,6 +290,7 @@ class SongPlayingFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         Statified.currentSongHelper = CurrentSongHelper()
         Statified.currentSongHelper?.isPlaying = true
+        Statified.currentSongHelper?.isSong = true
         Statified.currentSongHelper?.isLoop = false
         Statified.currentSongHelper?.isShuffle = false
 
@@ -338,7 +339,7 @@ class SongPlayingFragment : Fragment() {
 
         Staticated.processInformation(Statified.mediaplayer as MediaPlayer)
 
-        if (Statified.currentSongHelper?.isPlaying as Boolean) {
+        if (Statified.mediaplayer?.isPlaying as Boolean) {
             Statified.playPauseImageButton?.setBackgroundResource(R.drawable.pause_icon)
         } else {
             Statified.playPauseImageButton?.setBackgroundResource(R.drawable.play_icon)
@@ -443,10 +444,12 @@ class SongPlayingFragment : Fragment() {
         Statified.playPauseImageButton?.setOnClickListener {
             if (Statified.mediaplayer?.isPlaying as Boolean) {
                 Statified.mediaplayer?.pause()
+                Statified.currentSongHelper?.isSong = false
                 Statified.playPauseImageButton?.setBackgroundResource(R.drawable.play_icon)
             } else {
                 Statified.mediaplayer?.start()
                 Statified.currentSongHelper?.isPlaying = true
+                Statified.currentSongHelper?.isSong = true
                 Statified.playPauseImageButton?.setBackgroundResource(R.drawable.pause_icon)
             }
         }
@@ -472,7 +475,7 @@ class SongPlayingFragment : Fragment() {
         if (Statified.currentPosition == -1) {
             Statified.currentPosition = 0
         }
-        if (Statified.currentSongHelper?.isPlaying as Boolean) {
+        if (Statified.mediaplayer?.isPlaying as Boolean) {
             Statified.playPauseImageButton?.setBackgroundResource(R.drawable.pause_icon)
         } else {
             Statified.playPauseImageButton?.setBackgroundResource(R.drawable.play_icon)
