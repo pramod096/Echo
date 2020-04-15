@@ -485,7 +485,7 @@ class SongPlayingFragment : Fragment() {
     private fun playPrevious() {
         Statified.currentPosition = Statified.currentPosition - 1
         if (Statified.currentPosition == -1) {
-            Statified.currentPosition = 0
+            Statified.currentPosition = Statified.fetchSongs?.size?.minus(1) as Int
         }
         if (Statified.mediaplayer?.isPlaying as Boolean) {
             Statified.playPauseImageButton?.setBackgroundResource(R.drawable.pause_icon)
