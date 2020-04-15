@@ -132,11 +132,6 @@ class MainScreenFragment : Fragment() {
         myActivity = context as Activity
     }
 
-    @Suppress("DEPRECATION")
-    override fun onAttach(activity: Activity?) {
-        super.onAttach(activity)
-        myActivity = activity
-    }
 
     @SuppressLint("Recycle")
     fun getSongsFromPhone(): ArrayList<Songs> {

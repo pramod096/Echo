@@ -22,7 +22,7 @@ import com.example.echo.fragments.SongPlayingFragment
 class MainActivity : AppCompatActivity(){
 
     private var navigationDrawerIconsList: ArrayList<String> = arrayListOf()
-    private var imagesForNavdrawer = intArrayOf(R.drawable.navigation_allsongs,R.drawable.navigation_favorites,R.drawable.navigation_settings,R.drawable.navigation_aboutus)
+    private var imagesForNavdrawer = intArrayOf(R.drawable.navigation_allsongs,R.drawable.navigation_settings,R.drawable.navigation_aboutus)
     private var trackNotificationBuilder: Notification? = null
 
     object Statified{
@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity(){
         Statified.drawerLayout = findViewById(R.id.drawer_Layout)
 
         navigationDrawerIconsList.add("All Songs")
-        navigationDrawerIconsList.add("Favourites")
         navigationDrawerIconsList.add("Settings")
         navigationDrawerIconsList.add("About Us")
         val toggle = ActionBarDrawerToggle(this@MainActivity, Statified.drawerLayout,toolbar,

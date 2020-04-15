@@ -32,11 +32,6 @@ class AboutUsFragment : Fragment() {
         myActivity = context as Activity
     }
 
-    @Suppress("DEPRECATION")
-    override fun onAttach(activity: Activity?) {
-        super.onAttach(activity)
-        myActivity = activity
-    }
 
     override fun onPrepareOptionsMenu(menu: Menu?) {
         super.onPrepareOptionsMenu(menu)

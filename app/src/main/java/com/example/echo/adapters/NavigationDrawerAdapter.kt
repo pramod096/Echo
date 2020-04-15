@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.echo.R
 import com.example.echo.activities.MainActivity
 import com.example.echo.fragments.AboutUsFragment
-import com.example.echo.fragments.FavouriteFragment
 import com.example.echo.fragments.MainScreenFragment
 import com.example.echo.fragments.SettingsFragment
 
@@ -39,20 +38,13 @@ class NavigationDrawerAdapter(_contentList: ArrayList<String>, _getImages: IntAr
                         .commit()
                 }
                 1 -> {
-                    val favouriteFragment = FavouriteFragment()
-                    (mContext as MainActivity).supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.details_fragment,favouriteFragment)
-                        .commit()
-                }
-                2 -> {
                     val settingsFragment = SettingsFragment()
                     (mContext as MainActivity).supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.details_fragment,settingsFragment)
                         .commit()
                 }
-                3 -> {
+                2 -> {
                     val aboutUsFragment = AboutUsFragment()
                     (mContext as MainActivity).supportFragmentManager
                         .beginTransaction()

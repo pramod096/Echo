@@ -27,13 +27,7 @@
             app:av_bubblesPerLayer="16"
     />
 
-    <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:id="@+id/favouriteIcon"
-            android:layout_alignParentRight="true"
-            android:layout_margin="11dp"
-            android:background="@drawable/white_circle_icon"
-            android:src="@drawable/favorite_off"
-    />
+
 </RelativeLayout>
 
 
