@@ -45,6 +45,8 @@ class SongPlayingFragment : Fragment() {
         var songArtistView: TextView? = null
         var songTitleView: TextView? = null
         var shuffleImageButton: ImageButton? = null
+        var setup: MainScreenFragment? = null
+
 
         var currentPosition: Int = 0
         var fetchSongs: ArrayList<Songs>? = null
@@ -83,16 +85,22 @@ class SongPlayingFragment : Fragment() {
             if (Statified.currentSongHelper?.isShuffle as Boolean) {
                 playNext("PlayNextLikeNormalShuffle")
                 Statified.currentSongHelper?.isPlaying = true
+                Statified.currentSongHelper?.isSong = true
+
+
             } else {
                 if (Statified.currentSongHelper?.isLoop as Boolean) {
 
                     Statified.currentSongHelper?.isPlaying = true
+                    Statified.currentSongHelper?.isSong = true
                     val nextSong = Statified.fetchSongs?.get(Statified.currentPosition)
 
                     Statified.currentSongHelper?.songTitle = nextSong?.songTitle
                     Statified.currentSongHelper?.songPath = nextSong?.songData
                     Statified.currentSongHelper?.currentPosition = Statified.currentPosition
                     Statified.currentSongHelper?.songId = nextSong?.songID as Long
+
+
 
                     updateTextView(
                         Statified.currentSongHelper?.songTitle as String,
@@ -116,6 +124,7 @@ class SongPlayingFragment : Fragment() {
                 } else {
                     playNext("PlayNextNormal")
                     Statified.currentSongHelper?.isPlaying = true
+                    Statified.currentSongHelper?.isSong = true
                 }
             }
         }
@@ -405,6 +414,7 @@ class SongPlayingFragment : Fragment() {
         }
         Statified.nextImageButton?.setOnClickListener {
             Statified.currentSongHelper?.isPlaying = true
+            Statified.currentSongHelper?.isSong = true
             Statified.playPauseImageButton?.setBackgroundResource(R.drawable.pause_icon)
             if (Statified.currentSongHelper?.isShuffle as Boolean) {
                 Staticated.playNext("PlayNextLikeNormalShuffle")
@@ -414,6 +424,7 @@ class SongPlayingFragment : Fragment() {
         }
         Statified.previousImageButton?.setOnClickListener {
             Statified.currentSongHelper?.isPlaying = true
+            Statified.currentSongHelper?.isSong = true
             if (Statified.currentSongHelper?.isLoop as Boolean) {
                 Statified.loopImageButton?.setBackgroundResource(R.drawable.loop_white_icon)
             }

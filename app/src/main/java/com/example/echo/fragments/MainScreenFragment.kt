@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.ImageButton
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -163,13 +162,15 @@ class MainScreenFragment : Fragment() {
         return arrayList
     }
 
-    private fun bottomBarSetup() {
+        private fun bottomBarSetup() {
         try {
+
             bottomBarClickHandler()
+
             songTitle?.text = currentSongHelper?.songTitle
             SongPlayingFragment.Statified.mediaplayer?.setOnCompletionListener {
-                songTitle?.text = currentSongHelper?.songTitle
                 SongPlayingFragment.Staticated.onSongComplete()
+                songTitle?.text = currentSongHelper?.songTitle
             }
             if (currentSongHelper?.isPlaying as Boolean) {
                 nowPlayingBottomBar?.visibility = View.VISIBLE
@@ -218,6 +219,7 @@ class MainScreenFragment : Fragment() {
             }
         }
     }
+
 
 
 
