@@ -535,14 +535,16 @@ object Statiated{
                 val delta = mAccelerationCurrent - mAccelerationLast
                 mAcceleration = mAcceleration * 0.9f + delta
 
-                if (mAcceleration > 10) {
+                if (mAcceleration > 10)
+                {
                     val prefs =
                         Statified.myActivity?.getSharedPreferences(
                             Statified.MY_PREFS_NAME,
                             Context.MODE_PRIVATE
                         )
                     val isAllowed = prefs?.getBoolean("feature", false)
-                    if (isAllowed as Boolean) {
+                    if (isAllowed as Boolean)
+                    {
                         Staticated.playNext("PlayNextNormal")
                         if(Statified.mediaplayer?.isPlaying as Boolean)
                             Statified.playPauseImageButton?.setBackgroundResource(R.drawable.pause_icon)
