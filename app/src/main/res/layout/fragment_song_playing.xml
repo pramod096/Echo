@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -9,10 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
-<RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
-    <com.cleveroad.audiovisualization.GLAudioVisualizationView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+    <com.cleveroad.audiovisualization.GLAudioVisualizationView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/visualizer_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -40,7 +39,8 @@
             android:background="#9d2a58">
         <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                tools:ignore="UselessParent">
 
         <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:id="@+id/information_song">
@@ -76,16 +76,16 @@
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:id="@+id/startTime"
-                      android:layout_alignParentLeft="true"
-                      android:layout_marginLeft="15dp"
+                      android:layout_alignParentStart="true"
+                      android:layout_marginStart="15dp"
                       android:textColor="#ffffff"
                       android:layout_below="@+id/seekBar"
                       android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:id="@+id/endTime"
-                      android:layout_alignParentRight="true"
-                      android:layout_marginRight="15dp"
+                      android:layout_alignParentEnd="true"
+                      android:layout_marginEnd="15dp"
                       android:textColor="#ffffff"
                       android:layout_below="@+id/seekBar"
                       android:textAppearance="?android:attr/textAppearanceSmall"/>
@@ -110,25 +110,25 @@
                              android:minWidth="0dp"
                              android:minHeight="0dp"
                              android:layout_centerVertical="true"
-                             android:layout_marginRight="19dp"
-                             android:layout_toLeftOf="@+id/playPauseButton"
+                             android:layout_marginEnd="19dp"
+                             android:layout_toStartOf="@+id/playPauseButton"
                              android:id="@+id/previousButton"
                              android:background="@drawable/play_previous_icon"/>
 
                 <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:minHeight="0dp"
                              android:minWidth="0dp"
-                             android:layout_marginLeft="19dp"
+                             android:layout_marginStart="19dp"
                              android:layout_centerVertical="true"
-                             android:layout_toRightOf="@+id/playPauseButton"
+                             android:layout_toEndOf="@+id/playPauseButton"
                              android:id="@+id/nextButton"
                              android:background="@drawable/play_next_icon"/>
 
                 <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:id="@+id/LoopButton"
                              android:layout_centerVertical="true"
-                             android:layout_marginLeft="20dp"
-                             android:layout_toRightOf="@id/nextButton"
+                             android:layout_marginStart="20dp"
+                             android:layout_toEndOf="@id/nextButton"
                              android:minWidth="0dp"
                              android:minHeight="0dp"
                              android:background="@drawable/loop_white_icon"/>
@@ -136,8 +136,8 @@
                 <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:id="@+id/shuffleButton"
                              android:layout_centerVertical="true"
-                             android:layout_marginRight="20dp"
-                             android:layout_toLeftOf="@id/previousButton"
+                             android:layout_marginEnd="20dp"
+                             android:layout_toStartOf="@id/previousButton"
                              android:minWidth="0dp"
                              android:minHeight="0dp"
                              android:background="@drawable/shuffle_white_icon"/>
