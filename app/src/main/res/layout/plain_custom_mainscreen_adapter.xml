@@ -14,15 +14,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#212121"
-                        android:textStyle="italic"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:layout_alignParentTop="true"
                         android:textSize="17sp"
-                        android:text="***END OF SONGS***"
                         android:paddingEnd="9dp"
                         android:paddingBottom="-7dp"
-                        android:layout_marginTop="10dp"
                         android:layout_marginStart="20dp"
                         android:id="@+id/trackTitle"/>
 
