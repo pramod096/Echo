@@ -535,7 +535,7 @@ object Statiated{
                 val delta = mAccelerationCurrent - mAccelerationLast
                 mAcceleration = mAcceleration * 0.9f + delta
 
-                if (mAcceleration > 10)
+                if (mAcceleration > 14)
                 {
                     val prefs =
                         Statified.myActivity?.getSharedPreferences(
